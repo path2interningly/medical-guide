@@ -18,6 +18,7 @@ app.use(cors({
     'http://localhost:5174',
     'http://localhost:3000',
     'https://medical-guide-fullstack.vercel.app',
+    'https://medical-guide-fullstack-git-main-path2interninglys-projects.vercel.app',
     process.env.FRONTEND_URL
   ].filter(Boolean),
   credentials: true
