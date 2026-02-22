@@ -14,15 +14,11 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Check if user exists
-    const existingUser = await prisma.user.findUnique({ where: { email } }).catch(() => null);
-    if (existingUser) {
-<<<<<<< HEAD
-      return res.status(400).json({ error: 'This email has an existing account' });
-=======
+        // Check if user exists
+        const existingUser = await prisma.user.findUnique({ where: { email } }).catch(() => null);
+        if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
->>>>>>> 6e784946d8a1ffbad9bcdf4b66880f54756dd4bf
-    }
+        }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
