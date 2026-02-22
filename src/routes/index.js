@@ -3,7 +3,6 @@ const router = express.Router();
 const prisma = require('../config/prisma');
 const authMiddleware = require('../middleware/auth');
 
-<<<<<<< HEAD
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 // AI Proxy (OpenRouter) - NO AUTH NEEDED FOR DEVELOPMENT
@@ -50,10 +49,7 @@ router.post('/ai/chat', async (req, res) => {
   }
 });
 
-// Apply auth middleware to remaining routes
-=======
 // Apply auth middleware to all routes
->>>>>>> 6e784946d8a1ffbad9bcdf4b66880f54756dd4bf
 router.use(authMiddleware);
 
 // Templates
