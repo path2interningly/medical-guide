@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
         // Check if user exists
         const existingUser = await prisma.user.findUnique({ where: { email } }).catch(() => null);
         if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
+          return res.status(400).json({ error: 'User already exists' });
         }
 
     // Hash password
@@ -48,12 +48,6 @@ router.post('/register', async (req, res) => {
     res.json({ user, token });
   } catch (error) {
     console.error('Register error:', error);
-<<<<<<< HEAD
-    if (error?.code === 'P2002') {
-      return res.status(400).json({ error: 'This email has an existing account' });
-    }
-=======
->>>>>>> 6e784946d8a1ffbad9bcdf4b66880f54756dd4bf
     res.status(500).json({ error: error.message });
   }
 });
