@@ -11,10 +11,12 @@ router.post('/ai/chat', async (req, res) => {
     const { messages, model, temperature, max_tokens } = req.body || {};
 
     if (!Array.isArray(messages) || messages.length === 0) {
+      console.error('AI proxy error: No messages provided', req.body);
       return res.status(400).json({ error: 'Messages are required' });
     }
 
     if (!process.env.OPENROUTER_API_KEY) {
+      console.error('AI proxy error: Missing OPENROUTER_API_KEY');
       return res.status(500).json({ error: 'AI service not configured' });
     }
 
@@ -37,6 +39,12 @@ router.post('/ai/chat', async (req, res) => {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
+      console.error('AI proxy error: Bad response', {
+        status: response.status,
+        statusText: response.statusText,
+        error,
+        body: req.body
+      });
       return res.status(500).json({ error: error.error?.message || 'AI request failed' });
     }
 
@@ -44,8 +52,8 @@ router.post('/ai/chat', async (req, res) => {
     const content = data.choices?.[0]?.message?.content || '';
     return res.json({ content });
   } catch (error) {
-    console.error('AI proxy error:', error);
-    return res.status(500).json({ error: 'AI request failed' });
+    console.error('AI proxy error (exception):', error, req.body);
+    return res.status(500).json({ error: error.message || 'AI request failed' });
   }
 });
 
